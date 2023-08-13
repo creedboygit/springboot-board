@@ -7,3 +7,7 @@ https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&n
 # API Spec url
 
 https://docs.google.com/spreadsheets/d/1zcJG3v-iBINqeWWC2TxPknrJA_S2RcpN_M1Lwvzef08/edit?usp=sharing
+
+# ERD
+
+https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1#G1LRexmSEaVMgkvBGnjRMuUr7xUPt3APlu
