@@ -1,7 +1,12 @@
 package com.creedboy.springbootboard.domain;
 
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.ToString;
 
+@Getter
+@ToString
+//@Table(index)
 public class Article {
 
     private Long id;
