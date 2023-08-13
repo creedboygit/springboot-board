@@ -1,6 +1,7 @@
 package com.creedboy.springbootboard.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +27,7 @@ import org.springframework.data.annotation.LastModifiedDate;
     @Index(columnList = "createdAt"),
     @Index(columnList = "createdBy")
 })
+@Entity
 public class ArticleComment {
 
     @Id
