@@ -1,6 +1,11 @@
 package com.creedboy.springbootboard.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.creedboy.springbootboard.config.JpaConfig;
+import com.creedboy.springbootboard.domain.Article;
+import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +28,18 @@ class JpaRepositoryTest {
         this.articleCommentRepository = articleCommentRepository;
     }
 
-    @DisplayName("select test")
+    @DisplayName("select 테스트")
     @Test
     void givenTestData_whenSelecting_thenWorksFine() {
 
         // Given
 
         // When
+        List<Article> articles = articleRepository.findAll();
 
         // Then
-
+        assertThat(articles)
+            .isNotNull()
+            .hasSize(0);
     }
 }
