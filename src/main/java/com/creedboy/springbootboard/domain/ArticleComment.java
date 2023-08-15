@@ -2,6 +2,7 @@ package com.creedboy.springbootboard.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,15 +19,19 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-@Table(indexes = {
-    @Index(columnList = "content"),
-    @Index(columnList = "createdAt"),
-    @Index(columnList = "createdBy")
-})
+@Table(
+//    name = "article_comment",
+    indexes = {
+        @Index(columnList = "content"),
+        @Index(columnList = "createdAt"),
+        @Index(columnList = "createdBy")
+    })
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class ArticleComment {
 

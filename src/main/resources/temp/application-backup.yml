@@ -1,0 +1,74 @@
+debug: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    p6spy: DEBUG
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+      springframework:
+        web:
+          servlet: debug
+    com:
+      creedboy:
+        springbootboard: debug
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+      multiline: false
+      logging: slf4j
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/board
+    username: creed
+    password: test
+
+#    url: jdbc:mysql://polorl.cafe24.com:3306/polorl
+#    username: polorl
+#    password: polo80zh
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+  h2:
+    console:
+      enabled: false
+  sql.init.mode: always
+#  data:
+#    rest:
+#      base-path: /api
+#      detection-strategy: annotated
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:board;mode=mysql
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+  test.database.replace: none
+

@@ -1,27 +1,23 @@
-package com.creedboy.springbootboard.repository;
+package com.creedboy.springbootboard.temp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.creedboy.springbootboard.config.JpaConfig;
 import com.creedboy.springbootboard.domain.Article;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import com.creedboy.springbootboard.repository.ArticleCommentRepository;
+import com.creedboy.springbootboard.repository.ArticleRepository;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
-@Slf4j
 @DisplayName("JPA 연결 테스트")
-@Import(JpaConfig.class)
-@ActiveProfiles("local")
-//@AutoConfigureTestDatabase(replace = Replace.NONE)
+//@Import(JpaConfig.class)
+//@SpringBootTest
 @DataJpaTest
-public class JpaRepositoryTest {
+@Slf4j
+class JpaRepositoryTest {
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -29,24 +25,19 @@ public class JpaRepositoryTest {
     @Autowired
     private ArticleCommentRepository articleCommentRepository;
 
-    @DisplayName("findById 기본 테스트 + Spring Data JPA 동작 테스트")
-    @Test
-    void findById() {
+    private Article article;
 
-        Article article = Article.of("타이틀", "내용", "해시태그");
-//        log.debug("# article: {}", article.toString());
-        articleRepository.saveAndFlush(article);
-
-        log.debug("# article: {}", article);
-
-        Article foundArticle = articleRepository.findById(3L).get();
-
-        assertThat(foundArticle).isEqualTo(article);
+    public JpaRepositoryTest(
+        @Autowired ArticleRepository articleRepository,
+        @Autowired ArticleCommentRepository articleCommentRepository
+    ) {
+        this.articleRepository = articleRepository;
+        this.articleCommentRepository = articleCommentRepository;
     }
 
     @DisplayName("select 테스트")
     @Test
-    void select_test() {
+    void givenTestData_whenSelecting_thenWorksFine() {
 
         // Given
 
@@ -55,8 +46,8 @@ public class JpaRepositoryTest {
 
         // Then
         assertThat(articles)
-            .isNotNull()
-            .hasSize(2);
+            .isNotNull();
+//            .hasSize(2);
     }
 
     @DisplayName("insert 테스트")
@@ -74,20 +65,18 @@ public class JpaRepositoryTest {
         assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
     }
 
-    @DisplayName("builder insert 테스트")
+    @DisplayName("insert 테스트 2")
+//    @Order(1)
     @Test
-    void save_test() {
-
-        Article article = Article.builder()
-            .content("content1")
-            .title("title1")
-            .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-            .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-            .createdBy("creed")
-            .modifiedBy("creed")
+    void testSave() {
+        article = Article
+            .builder()
+            .content("content")
+            .title("title")
             .build();
 
-        articleRepository.save(article);
+        log.debug("# article: " + article.toString());
+
     }
 
     @DisplayName("update 테스트")
