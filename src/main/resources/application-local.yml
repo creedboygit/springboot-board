@@ -30,9 +30,13 @@ spring:
       mode: always
   h2:
     console:
-#      enabled: true
+      #      enabled: true
       enabled: false
       path: /h2-console
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
 
 logging:
   level:
