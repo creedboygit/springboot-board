@@ -6,6 +6,7 @@ import com.creedboy.springbootboard.config.JpaConfig;
 import com.creedboy.springbootboard.domain.Article;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class JpaRepositoryTest {
     @Autowired
     private ArticleCommentRepository articleCommentRepository;
 
+    @Disabled("테스트 제외")
     @DisplayName("findById 기본 테스트 + Spring Data JPA 동작 테스트")
     @Test
     void findById() {

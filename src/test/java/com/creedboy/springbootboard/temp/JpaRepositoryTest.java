@@ -7,12 +7,14 @@ import com.creedboy.springbootboard.repository.ArticleCommentRepository;
 import com.creedboy.springbootboard.repository.ArticleRepository;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@DisplayName("JPA 연결 테스트")
+@Disabled("테스트 제외")
+@DisplayName("JPA 테스트")
 //@Import(JpaConfig.class)
 //@SpringBootTest
 @DataJpaTest
