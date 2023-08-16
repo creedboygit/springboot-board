@@ -37,6 +37,7 @@ public class JpaRepositoryTest {
 //        log.debug("# article: {}", article.toString());
         articleRepository.saveAndFlush(article);
 
+//        log.debug("# article: {}", article);
         log.debug("# article: {}", article);
 
         Article foundArticle = articleRepository.findById(3L).get();
