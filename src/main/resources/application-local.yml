@@ -1,3 +1,5 @@
+server:
+  port: 5555
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -28,7 +30,8 @@ spring:
       mode: always
   h2:
     console:
-      enabled: true
+#      enabled: true
+      enabled: false
       path: /h2-console
 
 logging:
