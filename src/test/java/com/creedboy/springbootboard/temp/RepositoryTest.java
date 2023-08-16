@@ -3,8 +3,6 @@ package com.creedboy.springbootboard.temp;
 import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.repository.ArticleCommentRepository;
 import com.creedboy.springbootboard.repository.ArticleRepository;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,10 +26,10 @@ public class RepositoryTest {
             Article.builder()
                 .content("content1")
                 .title("title1")
-                .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-                .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-                .createdBy("creed")
-                .modifiedBy("creed")
+//                .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+//                .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+//                .createdBy("creed")
+//                .modifiedBy("creed")
                 .build()
         );
 
@@ -39,10 +37,10 @@ public class RepositoryTest {
             Article.builder()
                 .content("content2")
                 .title("title2")
-                .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-                .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-                .createdBy("creed")
-                .modifiedBy("creed")
+//                .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+//                .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+//                .createdBy("creed")
+//                .modifiedBy("creed")
                 .build()
         );
     }

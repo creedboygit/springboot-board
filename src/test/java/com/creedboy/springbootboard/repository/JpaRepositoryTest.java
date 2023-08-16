@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.creedboy.springbootboard.config.JpaConfig;
 import com.creedboy.springbootboard.domain.Article;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -81,10 +79,10 @@ public class JpaRepositoryTest {
         Article article = Article.builder()
             .content("content1")
             .title("title1")
-            .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-            .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-            .createdBy("creed")
-            .modifiedBy("creed")
+//            .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+//            .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+//            .createdBy("creed")
+//            .modifiedBy("creed")
             .build();
 
         articleRepository.save(article);
