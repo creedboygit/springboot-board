@@ -61,7 +61,7 @@ public class ArticleJsonTest {
             "해시태그"
         );
 
-        String jsonString = "{\"id\":null,\"userId\":null,\"title\":\"타이틀\",\"content\":\"내용\",\"hashTag\":\"해시태그\",\"articleComments\":[],\"createdAt\":null,\"createdBy\":null,\"modifi edAt\":null,\"modifiedBy\":null}";
+        String jsonString = "{\"id\":null,\"userId\":null,\"title\":\"타이틀\",\"content\":\"내용\",\"hashtag\":\"해시태그\",\"articleComments\":[],\"createdAt\":null,\"createdBy\":null,\"modifi edAt\":null,\"modifiedBy\":null}";
 
         log.debug("# json: {}", json.parse(jsonString));
         log.debug("# json: {}", json.parseObject(jsonString).getContent());
