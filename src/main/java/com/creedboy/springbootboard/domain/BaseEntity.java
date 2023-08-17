@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @ToString
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @DateTimeFormat(iso = ISO.DATE_TIME)
     @CreatedDate
