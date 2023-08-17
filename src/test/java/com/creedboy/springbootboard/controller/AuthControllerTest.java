@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest
 public class AuthControllerTest {
 
+    @Autowired
     private final MockMvc mvc;
 
     public AuthControllerTest(@Autowired MockMvc mvc) {
