@@ -48,7 +48,7 @@ class ArticleControllerTest {
             .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
             .andExpect(MockMvcResultMatchers.model().attributeExists("article"))
             .andExpect(MockMvcResultMatchers.model().attributeExists("articleComments"))
-            .andExpect(MockMvcResultMatchers.view().name("article/detail"));
+            .andExpect(MockMvcResultMatchers.view().name("articles/detail"));
     }
 
     @Disabled("구현 중")
