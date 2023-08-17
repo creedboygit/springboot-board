@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>게시판 페이지</title>
 </head>
 <body>
-<header th:replace="header :: header"></header>
+
+<header id="header"></header>
 
 <main>
   <form>
@@ -27,7 +28,7 @@
   <table>
     <thead>
     <tr>
-      <th>제목1</th>
+      <th>제목</th>
       <th>해시태그</th>
       <th>작성자</th>
       <th>작성일</th>
@@ -41,7 +42,7 @@
       <td>2023-08-16</td>
     </tr>
     <tr>
-      <td>두번째글2</td>
+      <td>두번째글12</td>
       <td>#자바</td>
       <td>creed2</td>
       <td>2023-08-16</td>
@@ -70,6 +71,6 @@
   </nav>
 </main>
 
-<footer th:replace="footer :: footer"></footer>
+<footer id="footer"></footer>
 </body>
 </html>
