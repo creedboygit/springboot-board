@@ -31,8 +31,8 @@ public class P6SpySqlFormatter {
             }
 
             // stack 을 구성하는 Format을 만든다
-//            return sql + createStack(connectionId, elapsed);
-            return sql + "\n\n";
+            return sql + createStack(connectionId, elapsed);
+//            return sql + "\n\n";
         }
 
         private String formatSql(String category, String sql) {
@@ -50,6 +50,7 @@ public class P6SpySqlFormatter {
                     sql = FormatStyle.BASIC.getFormatter().format(sql);
                 }
 //                sql = "|\nFormatSql(P6Spy sql, Hibernate format):" + sql;
+                sql = "|\n--------------------------------------" + sql;
             }
 
             return sql;
@@ -75,10 +76,14 @@ public class P6SpySqlFormatter {
                 sb.append("\n\t\t").append(order++).append(".").append(callStack.pop());
             }
 
-            return new StringBuffer().append("\n\n\tConnection ID: ").append(connectionId)
-                .append("\n\tExcution Time: ").append(elapsed).append("ms")
-                .append("\n\tCall Stack:").append(sb)
-                .append("\n--------------------------------------")
+//            return new StringBuffer().append("\n\n\tConnection ID: ").append(connectionId)
+//                .append("\n\tExcution Time: ").append(elapsed).append("ms")
+//                .append("\n\tCall Stack:").append(sb)
+//                .append("\n--------------------------------------")
+//                .toString();
+
+            return new StringBuffer().append("\n\tCall Stack:").append(sb)
+                .append("\n--------------------------------------\n")
                 .toString();
         }
     }
