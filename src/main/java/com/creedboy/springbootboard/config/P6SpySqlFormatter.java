@@ -72,7 +72,7 @@ public class P6SpySqlFormatter {
 
             StringBuilder sb = new StringBuilder();
             int order = 1;
-            while (callStack.size() != 0) {
+            while (!callStack.isEmpty()) {
                 sb.append("\n\t\t").append(order++).append(".").append(callStack.pop());
             }
 
