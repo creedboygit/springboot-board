@@ -2,10 +2,12 @@ package com.creedboy.springbootboard.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 
 import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.constant.SearchType;
 import com.creedboy.springbootboard.dto.ArticleDto;
+import com.creedboy.springbootboard.dto.ArticleUpdateDto;
 import com.creedboy.springbootboard.repository.ArticleRepository;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
@@ -72,5 +74,37 @@ class ArticleServiceTest {
 
         // Then
         BDDMockito.then(articleRepository).should().save(any(Article.class));
+    }
+
+    @DisplayName("게시글 ID와 수정 정보를 입력하면 게시글을 수정")
+    @Test
+    void givenArticleIdAndModifiedInfo_whenUpdatingArticle_thenUpdateArticle() {
+
+        // Given
+        ArticleUpdateDto dto = ArticleUpdateDto.of("titleee",
+            "contenttt",
+            "hashtaggg");
+
+        given(articleRepository.save(any(Article.class))).willReturn(null);
+
+        // When
+        articleService.updateArticle(1L, dto);
+
+        // Then
+        BDDMockito.then(articleRepository).should().save(any(Article.class));
+    }
+
+    @DisplayName("게시글 ID를 입력하면 게시글을 삭제")
+    @Test
+    void givenArticleId_whenDeletingArticle_thenDeleteArticle() {
+
+        // Given
+        willDoNothing().given(articleRepository).delete(any(Article.class));
+
+        // When
+        articleService.deleteArticle(1L);
+
+        // Then
+        BDDMockito.then(articleRepository).should().delete(any(Article.class));
     }
 }

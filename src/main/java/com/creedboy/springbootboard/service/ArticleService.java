@@ -2,6 +2,7 @@ package com.creedboy.springbootboard.service;
 
 import com.creedboy.springbootboard.domain.constant.SearchType;
 import com.creedboy.springbootboard.dto.ArticleDto;
+import com.creedboy.springbootboard.dto.ArticleUpdateDto;
 import com.creedboy.springbootboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,5 +30,12 @@ public class ArticleService {
     }
 
     public void saveArticle(ArticleDto dto) {
+    }
+
+    public void updateArticle(long articleId, ArticleUpdateDto dto) {
+    }
+
+    public void deleteArticle(long articleId) {
+
     }
 }
