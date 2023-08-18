@@ -37,7 +37,7 @@ public class P6SpySqlFormatter {
 
         private String formatSql(String category, String sql) {
 
-            if (sql == null || sql.trim().equals("")) {
+            if (sql == null || sql.trim().isEmpty()) {
                 return sql;
             }
 
