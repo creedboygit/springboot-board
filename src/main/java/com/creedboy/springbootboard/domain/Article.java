@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -24,7 +26,7 @@ import lombok.ToString;
 @Getter
 //@NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Builder
 @Table(
 //    name = "article",
@@ -41,8 +43,12 @@ public class Article extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String userId; // userId
+    @JoinColumn(name = "userId")
+    @ManyToOne(optional = false)
+    private UserAccount userAccount; // 유저 정보 (ID)
+
+//    @Column
+//    private String userId; // userId
 
     @Setter
     @Column(nullable = false)
@@ -56,23 +62,22 @@ public class Article extends BaseEntity {
     private String hashtag; // 해시태그
 
     @ToString.Exclude
-    @OrderBy("id")
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
+    public Article() {
+    }
 
-    private Article(String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
+        this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
-    public Article() {
-
-    }
-
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
 
 //
@@ -102,12 +107,12 @@ public class Article extends BaseEntity {
         if (!(o instanceof Article article)) {
             return false;
         }
-        return Objects.equals(id, article.id) && Objects.equals(userId, article.userId) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(
-            hashtag, article.hashtag) && Objects.equals(articleComments, article.articleComments);
+        return Objects.equals(id, article.id) && Objects.equals(userAccount, article.userAccount) && Objects.equals(title, article.title) && Objects.equals(content, article.content)
+            && Objects.equals(hashtag, article.hashtag) && Objects.equals(articleComments, article.articleComments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, content, hashtag, articleComments);
+        return Objects.hash(id, userAccount, title, content, hashtag, articleComments);
     }
 }

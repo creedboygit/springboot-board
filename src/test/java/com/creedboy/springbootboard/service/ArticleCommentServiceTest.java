@@ -8,6 +8,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 
 import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.ArticleComment;
+import com.creedboy.springbootboard.domain.UserAccount;
 import com.creedboy.springbootboard.dto.ArticleCommentDto;
 import com.creedboy.springbootboard.dto.ArticleUpdateCommentDto;
 import com.creedboy.springbootboard.repository.ArticleCommentRepository;
@@ -36,13 +37,16 @@ class ArticleCommentServiceTest {
     @Mock
     private ArticleRepository articleRepository;
 
+
     @DisplayName("게시글 ID로 댓글 리스트 조회하면 해당 댓글 리스트 반환")
     @Test
     void givenArticleId_whenSearchingArticleComments_thenReturnsArticleComments() {
 
         Long articleId = 1L;
 
-        Article article = Article.of("title", "content", "hashtag");
+        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
+
+        Article article = Article.of(userAccount, "title", "content", "hashtag");
 
         // Given
         BDDMockito.given(articleRepository.findById(articleId)).willReturn(Optional.of(article));

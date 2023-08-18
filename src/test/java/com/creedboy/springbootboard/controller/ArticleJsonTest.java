@@ -3,6 +3,7 @@ package com.creedboy.springbootboard.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.creedboy.springbootboard.domain.Article;
+import com.creedboy.springbootboard.domain.UserAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,10 @@ public class ArticleJsonTest {
     @Test
     void testSerialize() throws IOException {
 
+        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
+
         Article article = Article.of(
+            userAccount,
             "타이틀",
             "내용",
             "해시태그"
@@ -55,7 +59,10 @@ public class ArticleJsonTest {
     @Test
     void testDeserialize() throws IOException {
 
+        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
+
         Article article = Article.of(
+            userAccount,
             "타이틀",
             "내용",
             "해시태그"

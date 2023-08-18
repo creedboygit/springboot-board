@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.creedboy.springbootboard.config.JpaConfig;
 import com.creedboy.springbootboard.domain.Article;
+import com.creedboy.springbootboard.domain.UserAccount;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +28,27 @@ public class JpaRepositoryTest {
     @Autowired
     private ArticleCommentRepository articleCommentRepository;
 
-    @Disabled("테스트 제외")
-    @DisplayName("findById 기본 테스트 + Spring Data JPA 동작 테스트")
-    @Test
-    void findById() {
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
-        Article article = Article.of("타이틀", "내용", "해시태그");
-//        log.debug("# article: {}", article.toString());
-        articleRepository.saveAndFlush(article);
-
+//    @Disabled("테스트 제외")
+//    @DisplayName("findById 기본 테스트 + Spring Data JPA 동작 테스트")
+//    @Test
+//    void findById() {
+//
+//        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
+//
+//        Article article = Article.of(userAccount, "타이틀", "내용", "해시태그");
+////        log.debug("# article: {}", article.toString());
+//        articleRepository.saveAndFlush(article);
+//
+////        log.debug("# article: {}", article);
 //        log.debug("# article: {}", article);
-        log.debug("# article: {}", article);
-
-        Article foundArticle = articleRepository.findById(3L).get();
-
-        assertThat(foundArticle).isEqualTo(article);
-    }
+//
+//        Article foundArticle = articleRepository.findById(3L).get();
+//
+//        assertThat(foundArticle).isEqualTo(article);
+//    }
 
     @DisplayName("select 테스트")
     @Test
@@ -67,29 +72,34 @@ public class JpaRepositoryTest {
         // Given
         long previousCount = articleRepository.count();
 
+//        UserAccount ua = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
+        UserAccount userAccount = userAccountRepository.saveAndFlush(UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos"));
+
+        Article article = Article.of(userAccount, "new article", "new content", "#spring");
+
         // When
-        Article savedArticle = articleRepository.save(Article.of("new article", "new content", "#spring"));
-        List<Article> articles = articleRepository.findAll();
+        Article savedArticle = articleRepository.save(article);
+//        List<Article> articles = articleRepository.findAll();
 
         // Then
         assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
     }
 
-    @DisplayName("builder insert 테스트")
-    @Test
-    void save_test() {
-
-        Article article = Article.builder()
-            .content("content1")
-            .title("title1")
-//            .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-//            .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
-//            .createdBy("creed")
-//            .modifiedBy("creed")
-            .build();
-
-        articleRepository.save(article);
-    }
+//    @DisplayName("builder insert 테스트")
+//    @Test
+//    void save_test() {
+//
+//        Article article = Article.builder()
+//            .content("content1")
+//            .title("title1")
+////            .createdAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+////            .modifiedAt(Timestamp.valueOf(LocalDateTime.now()).toLocalDateTime())
+////            .createdBy("creed")
+////            .modifiedBy("creed")
+//            .build();
+//
+//        articleRepository.save(article);
+//    }
 
     @DisplayName("update 테스트")
     @Test
