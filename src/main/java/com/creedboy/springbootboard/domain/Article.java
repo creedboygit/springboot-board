@@ -17,7 +17,6 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,7 +26,7 @@ import lombok.ToString;
 //@NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@Builder
+//@Builder
 @Table(
 //    name = "article",
     indexes = {
@@ -39,11 +38,19 @@ import lombok.ToString;
 @Entity
 public class Article extends BaseEntity {
 
+    // TODO : creed - 2023-08-20 - 소스 주석 정리
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "userId")
+    //        @JoinColumn(name = "user_id", referencedColumnName = "userId")
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "userAccount_id")
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_account_id")
     @ManyToOne(optional = false)
     private UserAccount userAccount; // 유저 정보 (ID)
 

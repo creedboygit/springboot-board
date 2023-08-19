@@ -8,19 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import java.util.Objects;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 //@NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(callSuper = true)
-@Builder
+//@Builder
 @Table(
-//    name = "article",
     indexes = {
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
@@ -30,6 +29,9 @@ public class UserAccount extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+//    @JoinColumn(name = "user_account_id")
+    @Column(name = "user_account_id")
     private Long id;
 
     @Column(length = 50)
@@ -57,7 +59,12 @@ public class UserAccount extends BaseEntity {
 //        this.memo = memo;
 //    }
 
-    public static UserAccount of(Long id, String userId, String userPassword, String email, String nickname, String memo) {
+    public static UserAccount of(Long id,
+        String userId,
+        String userPassword,
+        String email,
+        String nickname,
+        String memo) {
         return new UserAccount(id, userId, userPassword, email, nickname, memo);
     }
 
@@ -69,12 +76,12 @@ public class UserAccount extends BaseEntity {
         if (!(o instanceof UserAccount that)) {
             return false;
         }
-        return Objects.equals(userId, that.userId) && Objects.equals(userPassword, that.userPassword) && Objects.equals(email, that.email) && Objects.equals(nickname, that.nickname)
-            && Objects.equals(memo, that.memo);
+        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(userPassword, that.userPassword) && Objects.equals(email, that.email) && Objects.equals(
+            nickname, that.nickname) && Objects.equals(memo, that.memo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, userPassword, email, nickname, memo);
+        return Objects.hash(id, userId, userPassword, email, nickname, memo);
     }
 }
