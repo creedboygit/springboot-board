@@ -14,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -105,6 +104,24 @@ public class Article extends BaseEntity {
 //        return id.hashCode();
 //    }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) {
+//            return true;
+//        }
+//        if (!(o instanceof Article)) {
+//            return false;
+//        }
+//        Article article = (Article) o;
+//        return Objects.equals(id, article.id) && Objects.equals(userAccount, article.userAccount) && Objects.equals(title, article.title) && Objects.equals(content, article.content)
+//            && Objects.equals(hashtag, article.hashtag) && Objects.equals(articleComments, article.articleComments);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, userAccount, title, content, hashtag, articleComments);
+//    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -114,12 +131,12 @@ public class Article extends BaseEntity {
         if (!(o instanceof Article article)) {
             return false;
         }
-        return Objects.equals(id, article.id) && Objects.equals(userAccount, article.userAccount) && Objects.equals(title, article.title) && Objects.equals(content, article.content)
-            && Objects.equals(hashtag, article.hashtag) && Objects.equals(articleComments, article.articleComments);
+
+        return id.equals(article.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userAccount, title, content, hashtag, articleComments);
+        return id.hashCode();
     }
 }

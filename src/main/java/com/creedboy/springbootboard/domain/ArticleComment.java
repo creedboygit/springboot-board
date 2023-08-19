@@ -9,7 +9,6 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,6 +59,23 @@ public class ArticleComment extends BaseEntity {
         return new ArticleComment(article, userAccount, content);
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) {
+//            return true;
+//        }
+//        if (!(o instanceof ArticleComment that)) {
+//            return false;
+//        }
+//        return Objects.equals(id, that.id) && Objects.equals(userAccount, that.userAccount) && Objects.equals(article, that.article) && Objects.equals(content, that.content);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, userAccount, article, content);
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -68,11 +84,12 @@ public class ArticleComment extends BaseEntity {
         if (!(o instanceof ArticleComment that)) {
             return false;
         }
-        return Objects.equals(id, that.id) && Objects.equals(userAccount, that.userAccount) && Objects.equals(article, that.article) && Objects.equals(content, that.content);
+
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userAccount, article, content);
+        return id.hashCode();
     }
 }
