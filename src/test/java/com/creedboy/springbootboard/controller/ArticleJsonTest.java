@@ -26,7 +26,7 @@ public class ArticleJsonTest {
     @Test
     void testSerialize() throws IOException {
 
-        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos", "createdby");
+        UserAccount userAccount = UserAccount.of(1L, "creedboy", "a123123", "creed@creed.com", "nick", "memos");
 
         Article article = Article.of(
             userAccount,
@@ -59,7 +59,7 @@ public class ArticleJsonTest {
     @Test
     void testDeserialize() throws IOException {
 
-        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos", "createdby");
+        UserAccount userAccount = UserAccount.of(1L, "creedboy", "a123123", "creed@creed.com", "nick", "memos");
 
         Article article = Article.of(
             userAccount,

@@ -2,6 +2,8 @@ package com.creedboy.springbootboard.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
@@ -26,11 +28,10 @@ import lombok.ToString;
 @Entity
 public class UserAccount extends BaseEntity {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(length = 50)
     private String userId;
 
@@ -48,16 +49,16 @@ public class UserAccount extends BaseEntity {
     public UserAccount() {
     }
 
-    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
-        this.userId = userId;
-        this.userPassword = userPassword;
-        this.email = email;
-        this.nickname = nickname;
-        this.memo = memo;
-    }
+//    private UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
+//        this.userId = userId;
+//        this.userPassword = userPassword;
+//        this.email = email;
+//        this.nickname = nickname;
+//        this.memo = memo;
+//    }
 
-    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
-        return new UserAccount(userId, userPassword, email, nickname, memo, createdBy);
+    public static UserAccount of(Long id, String userId, String userPassword, String email, String nickname, String memo) {
+        return new UserAccount(id, userId, userPassword, email, nickname, memo);
     }
 
     @Override
