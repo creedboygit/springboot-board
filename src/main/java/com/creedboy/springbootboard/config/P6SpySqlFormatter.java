@@ -45,7 +45,7 @@ public class P6SpySqlFormatter {
             if (Category.STATEMENT.getName().equals(category)) {
                 String tmpsql = sql.trim().toLowerCase(Locale.ROOT);
                 if (tmpsql.startsWith("create") || tmpsql.startsWith("alter") || tmpsql.startsWith("comment")) {
-                    sql = FormatStyle.BASIC.getFormatter().format(sql);
+                    sql = FormatStyle.DDL.getFormatter().format(sql);
                 } else {
                     sql = FormatStyle.BASIC.getFormatter().format(sql);
                 }
