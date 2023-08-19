@@ -18,6 +18,6 @@ insert into article (user_id, title, content, created_by, modified_by, created_a
 values ('creedboys', '제목입니다.11', '내용입니다.11', 'Kamilah', 'Murial', '2021-05-30 23:53:46', '2021-03-10 08:48:50', '해시태그11'),
        ('creedboys', '제목입니다.22', '내용입니다.222', 'Arv', 'Keelby', '2021-05-06 11:51:24', '2021-05-23 08:34:54', '해시태그22');
 
-insert into article_comment (article_id, content, created_by, modified_by, created_at, modified_at)
-values (1, '제목입니다.11', 'Kamilah', 'Murial', '2021-05-30 23:53:46', '2021-03-10 08:48:50'),
-       (1, '제목입니다.22', 'Arv', 'Keelby', '2021-05-06 11:51:24', '2021-05-23 08:34:54');
+insert into article_comment (user_id, article_id, content, created_by, modified_by, created_at, modified_at)
+values ('creedboys', 1, '제목입니다.11', 'Kamilah', 'Murial', '2021-05-30 23:53:46', '2021-03-10 08:48:50'),
+       ('creedboys', 1, '제목입니다.22', 'Arv', 'Keelby', '2021-05-06 11:51:24', '2021-05-23 08:34:54');

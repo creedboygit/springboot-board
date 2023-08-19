@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -32,6 +33,11 @@ public class ArticleComment extends BaseEntity {
     private Long id;
 
     @Setter
+    @JoinColumn(name = "userId")
+    @ManyToOne(optional = false)
+    private UserAccount userAccount; // 유저 정보 (ID)
+
+    @Setter
     @ManyToOne(optional = false)
     private Article article; // 게시글 (ID)
 
@@ -39,15 +45,16 @@ public class ArticleComment extends BaseEntity {
     @Column(nullable = false, length = 500)
     private String content; // 내용
 
-    private ArticleComment(Article article, String content) {
+    private ArticleComment(Article article, UserAccount userAccount, String content) {
 
+        this.userAccount = userAccount;
         this.article = article;
         this.content = content;
     }
 
-    public static ArticleComment of(Article article, String content) {
+    public static ArticleComment of(Article article, UserAccount userAccount, String content) {
 
-        return new ArticleComment(article, content);
+        return new ArticleComment(article, userAccount, content);
     }
 
     @Override

@@ -26,6 +26,10 @@ import lombok.ToString;
 @Entity
 public class UserAccount extends BaseEntity {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
     @Id
     @Column(length = 50)
     private String userId;
@@ -52,8 +56,8 @@ public class UserAccount extends BaseEntity {
         this.memo = memo;
     }
 
-    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
-        return new UserAccount(userId, userPassword, email, nickname, memo);
+    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
+        return new UserAccount(userId, userPassword, email, nickname, memo, createdBy);
     }
 
     @Override
