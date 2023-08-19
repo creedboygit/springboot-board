@@ -44,7 +44,7 @@ class ArticleCommentServiceTest {
 
         Long articleId = 1L;
 
-        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
+        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos", "createdby");
 
         Article article = Article.of(userAccount, "title", "content", "hashtag");
 

@@ -9,6 +9,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ public class ArticleComment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
+    //    @Setter
     @JoinColumn(name = "userId")
     @ManyToOne(optional = false)
     private UserAccount userAccount; // 유저 정보 (ID)
@@ -47,8 +48,8 @@ public class ArticleComment extends BaseEntity {
 
     private ArticleComment(Article article, UserAccount userAccount, String content) {
 
-        this.userAccount = userAccount;
         this.article = article;
+        this.userAccount = userAccount;
         this.content = content;
     }
 
@@ -65,12 +66,11 @@ public class ArticleComment extends BaseEntity {
         if (!(o instanceof ArticleComment that)) {
             return false;
         }
-
-        return id != null && id.equals(that.id);
+        return Objects.equals(id, that.id) && Objects.equals(userAccount, that.userAccount) && Objects.equals(article, that.article) && Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return Objects.hash(id, userAccount, article, content);
     }
 }

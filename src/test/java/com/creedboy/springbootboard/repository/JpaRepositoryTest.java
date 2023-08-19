@@ -3,13 +3,16 @@ package com.creedboy.springbootboard.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.creedboy.springbootboard.config.JpaConfig;
+import com.creedboy.springbootboard.config.P6SpySqlFormatter;
 import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.UserAccount;
+import com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorAutoConfiguration;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Slf4j
 @DisplayName("JPA 연결 테스트")
 @Import(JpaConfig.class)
+@ImportAutoConfiguration({DataSourceDecoratorAutoConfiguration.class, P6SpySqlFormatter.class})
 @ActiveProfiles("local")
 //@AutoConfigureTestDatabase(replace = Replace.NONE)
 @DataJpaTest
@@ -73,7 +77,7 @@ public class JpaRepositoryTest {
         long previousCount = articleRepository.count();
 
 //        UserAccount ua = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos");
-        UserAccount userAccount = userAccountRepository.saveAndFlush(UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos"));
+        UserAccount userAccount = userAccountRepository.saveAndFlush(UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos", "creedcreated"));
 
         Article article = Article.of(userAccount, "new article", "new content", "#spring");
 

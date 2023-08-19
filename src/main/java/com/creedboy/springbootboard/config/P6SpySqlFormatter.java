@@ -20,7 +20,7 @@ public class P6SpySqlFormatter {
     static public class P6spySqlFormatConfiguration implements MessageFormattingStrategy {
 
         // 표기에 허용되는 filter
-        private static final String ALLOW_FILTER = "com.hanssem";
+        private static final String ALLOW_FILTER = "com.creed";
 
         @Override
         public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
@@ -45,7 +45,7 @@ public class P6SpySqlFormatter {
             if (Category.STATEMENT.getName().equals(category)) {
                 String tmpsql = sql.trim().toLowerCase(Locale.ROOT);
                 if (tmpsql.startsWith("create") || tmpsql.startsWith("alter") || tmpsql.startsWith("comment")) {
-                    sql = FormatStyle.DDL.getFormatter().format(sql);
+                    sql = FormatStyle.BASIC.getFormatter().format(sql);
                 } else {
                     sql = FormatStyle.BASIC.getFormatter().format(sql);
                 }
@@ -65,7 +65,7 @@ public class P6SpySqlFormatter {
                 String trace = stackTraceElement.toString();
 
                 // trace 항목을 보고 내게 맞는 것만 필터
-                if (trace.startsWith(ALLOW_FILTER)) {
+                if (trace.startsWith(ALLOW_FILTER) && !trace.contains("config.P6SpySqlFormatter")) {
                     callStack.push(trace);
                 }
             }
@@ -82,7 +82,7 @@ public class P6SpySqlFormatter {
 //                .append("\n--------------------------------------")
 //                .toString();
 
-            return new StringBuffer().append("\n\tCall Stack:").append(sb)
+            return new StringBuffer().append("\n\n\tCall Stack:").append(sb)
                 .append("\n--------------------------------------\n")
                 .toString();
         }
