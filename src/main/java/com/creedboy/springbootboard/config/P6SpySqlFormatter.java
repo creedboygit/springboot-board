@@ -20,7 +20,7 @@ public class P6SpySqlFormatter {
     static public class P6spySqlFormatConfiguration implements MessageFormattingStrategy {
 
         // 표기에 허용되는 filter
-        private static final String ALLOW_FILTER = "com.hanssem";
+        private static final String ALLOW_FILTER = "com.creed";
 
         @Override
         public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
@@ -31,13 +31,13 @@ public class P6SpySqlFormatter {
             }
 
             // stack 을 구성하는 Format을 만든다
-//            return sql + createStack(connectionId, elapsed);
-            return sql + "\n\n";
+            return sql + createStack(connectionId, elapsed);
+//            return sql + "\n\n";
         }
 
         private String formatSql(String category, String sql) {
 
-            if (sql == null || sql.trim().equals("")) {
+            if (sql == null || sql.trim().isEmpty()) {
                 return sql;
             }
 
@@ -50,6 +50,7 @@ public class P6SpySqlFormatter {
                     sql = FormatStyle.BASIC.getFormatter().format(sql);
                 }
 //                sql = "|\nFormatSql(P6Spy sql, Hibernate format):" + sql;
+                sql = "|\n--------------------------------------" + sql;
             }
 
             return sql;
@@ -64,21 +65,25 @@ public class P6SpySqlFormatter {
                 String trace = stackTraceElement.toString();
 
                 // trace 항목을 보고 내게 맞는 것만 필터
-                if (trace.startsWith(ALLOW_FILTER)) {
+                if (trace.startsWith(ALLOW_FILTER) && !trace.contains("config.P6SpySqlFormatter")) {
                     callStack.push(trace);
                 }
             }
 
             StringBuilder sb = new StringBuilder();
             int order = 1;
-            while (callStack.size() != 0) {
+            while (!callStack.isEmpty()) {
                 sb.append("\n\t\t").append(order++).append(".").append(callStack.pop());
             }
 
-            return new StringBuffer().append("\n\n\tConnection ID: ").append(connectionId)
-                .append("\n\tExcution Time: ").append(elapsed).append("ms")
-                .append("\n\tCall Stack:").append(sb)
-                .append("\n--------------------------------------")
+//            return new StringBuffer().append("\n\n\tConnection ID: ").append(connectionId)
+//                .append("\n\tExcution Time: ").append(elapsed).append("ms")
+//                .append("\n\tCall Stack:").append(sb)
+//                .append("\n--------------------------------------")
+//                .toString();
+
+            return new StringBuffer().append("\n\n\tCall Stack:").append(sb)
+                .append("\n--------------------------------------\n")
                 .toString();
         }
     }

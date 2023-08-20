@@ -8,14 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,8 +24,8 @@ import lombok.ToString;
 @Getter
 //@NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
+@ToString(callSuper = true)
+//@Builder
 @Table(
 //    name = "article",
     indexes = {
@@ -37,12 +37,24 @@ import lombok.ToString;
 @Entity
 public class Article extends BaseEntity {
 
+    // TODO : creed - 2023-08-20 - 소스 주석 정리
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String userId; // userId
+    //        @JoinColumn(name = "user_id", referencedColumnName = "userId")
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "userAccount_id")
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_account_id")
+    @ManyToOne(optional = false)
+    private UserAccount userAccount; // 유저 정보 (ID)
+
+//    @Column
+//    private String userId; // userId
 
     @Setter
     @Column(nullable = false)
@@ -56,43 +68,23 @@ public class Article extends BaseEntity {
     private String hashtag; // 해시태그
 
     @ToString.Exclude
-    @OrderBy("id")
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
+    public Article() {
+    }
 
-    private Article(String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
+        this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
-    public Article() {
-
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
-
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
-    }
-
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (!(o instanceof Article article)) {
-//            return false;
-//        }
-//
-//        return id != null && id.equals(article.id);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return id.hashCode();
-//    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -102,12 +94,12 @@ public class Article extends BaseEntity {
         if (!(o instanceof Article article)) {
             return false;
         }
-        return Objects.equals(id, article.id) && Objects.equals(userId, article.userId) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(
-            hashtag, article.hashtag) && Objects.equals(articleComments, article.articleComments);
+
+        return id.equals(article.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, content, hashtag, articleComments);
+        return id.hashCode();
     }
 }
