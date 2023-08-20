@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public record ArticleWithCommentsResponse(
     Long id,
     String title,
+    String content,
     String hashtag,
     LocalDateTime createdAt,
     String email,
@@ -17,15 +18,16 @@ public record ArticleWithCommentsResponse(
     Set<ArticleCommentResponse> articleCommentsResponse
 ) {
 
-    public static ArticleWithCommentsResponse of(Long id, String title, String hashtag, LocalDateTime createdAt, String email, String nickname, String userId, Set<ArticleCommentResponse> articleCommentResponse) {
+    public static ArticleWithCommentsResponse of(Long id, String title, String content, String hashtag, LocalDateTime createdAt, String email, String nickname, String userId, Set<ArticleCommentResponse> articleCommentResponse) {
 
-        return new ArticleWithCommentsResponse(id, title, hashtag, createdAt, email, nickname, userId, articleCommentResponse);
+        return new ArticleWithCommentsResponse(id, title, content, hashtag, createdAt, email, nickname, userId, articleCommentResponse);
     }
 
     public static ArticleWithCommentsResponse from(ArticleWithCommentsDto dto) {
         return ArticleWithCommentsResponse.of(
             dto.id(),
             dto.title(),
+            dto.content(),
             dto.hashtag(),
             dto.createdAt(),
             dto.userAccountDto().email(),
