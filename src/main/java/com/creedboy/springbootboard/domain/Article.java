@@ -86,43 +86,6 @@ public class Article extends BaseEntity {
         return new Article(userAccount, title, content, hashtag);
     }
 
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (!(o instanceof Article article)) {
-//            return false;
-//        }
-//
-//        return id != null && id.equals(article.id);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return id.hashCode();
-//    }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (!(o instanceof Article)) {
-//            return false;
-//        }
-//        Article article = (Article) o;
-//        return Objects.equals(id, article.id) && Objects.equals(userAccount, article.userAccount) && Objects.equals(title, article.title) && Objects.equals(content, article.content)
-//            && Objects.equals(hashtag, article.hashtag) && Objects.equals(articleComments, article.articleComments);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, userAccount, title, content, hashtag, articleComments);
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

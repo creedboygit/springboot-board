@@ -17,7 +17,6 @@ import com.creedboy.springbootboard.repository.ArticleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -69,14 +68,14 @@ class ArticleServiceTest {
         SearchType searchType = SearchType.TITLE;
         String searchKeyword = "title";
         Pageable pageable = Pageable.ofSize(20);
-        given(articleRepository.findByTitle(searchKeyword, pageable)).willReturn(Page.empty());
+        given(articleRepository.findByTitleContaining(searchKeyword, pageable)).willReturn(Page.empty());
 
         // When
         Page<ArticleDto> articles = articleService.searchArticles(searchType, searchKeyword, pageable);
 
         // Then
         assertThat(articles).isEmpty();
-        then(articleRepository).should().findByTitle(searchKeyword, pageable);
+        then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
     }
 
     @DisplayName("게시글을 조회 시 게시글 반환")
@@ -94,7 +93,7 @@ class ArticleServiceTest {
 
         // Then
 //        assertThat(article).isNotNull();
-        Assertions.assertThat(dto)
+        assertThat(dto)
             .hasFieldOrPropertyWithValue("title", article.getTitle())
             .hasFieldOrPropertyWithValue("content", article.getContent())
             .hasFieldOrPropertyWithValue("hashtag", article.getHashtag());
@@ -114,7 +113,7 @@ class ArticleServiceTest {
         Throwable t = catchThrowable(() -> articleService.getArticle(articleId));
 
         // Then
-        Assertions.assertThat(t)
+        assertThat(t)
             .isInstanceOf(EntityNotFoundException.class)
             .hasMessage("게시글이 없습니다 - articleId: " + articleId);
 
@@ -149,12 +148,12 @@ class ArticleServiceTest {
         articleService.updateArticle(dto);
 
         // Then
-        Assertions.assertThat(article)
+        assertThat(article)
             .hasFieldOrPropertyWithValue("title", dto.title())
             .hasFieldOrPropertyWithValue("content", dto.content())
             .hasFieldOrPropertyWithValue("hashtag", dto.hashtag());
 
-        then(articleRepository).should().findById(dto.id());
+        then(articleRepository).should().getReferenceById(dto.id());
     }
 
     @DisplayName("없는 게시글의 수정 정보를 입력하면, 경고 로그를 찍고 아무것도 하지 않음")
