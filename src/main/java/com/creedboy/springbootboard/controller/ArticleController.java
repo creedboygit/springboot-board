@@ -6,7 +6,6 @@ import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
 import com.creedboy.springbootboard.dto.response.ArticleResponse;
 import com.creedboy.springbootboard.dto.response.ArticleWithCommentsResponse;
 import com.creedboy.springbootboard.service.ArticleService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,7 +48,7 @@ public class ArticleController {
 
 //        map.addAttribute("article", "article");
         map.addAttribute("article", articlesResponse);
-        map.addAttribute("articleComments", List.of());
+        map.addAttribute("articleComments", articlesResponse.articleCommentsResponse());
 
         return "articles/detail";
     }

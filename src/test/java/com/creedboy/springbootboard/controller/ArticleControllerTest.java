@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.creedboy.springbootboard.config.SecurityConfig;
+import com.creedboy.springbootboard.dto.ArticleCommentDto;
 import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
 import com.creedboy.springbootboard.dto.UserAccountDto;
 import com.creedboy.springbootboard.service.ArticleService;
@@ -112,7 +113,8 @@ class ArticleControllerTest {
         return ArticleWithCommentsDto.of(
             1L,
             createUserAccountDto(),
-            Set.of(),
+//            Set.of(),
+            createArticleCommentDto(),
             "title",
             "content",
             "#java",
@@ -120,6 +122,21 @@ class ArticleControllerTest {
             "creed",
             LocalDateTime.now(),
             "creed"
+        );
+    }
+
+    private Set<ArticleCommentDto> createArticleCommentDto() {
+        return Set.of(
+            ArticleCommentDto.of(
+                1L,
+                createUserAccountDto(),
+                "content입니다1"
+            ),
+            ArticleCommentDto.of(
+                1L,
+                createUserAccountDto(),
+                "content입니다2"
+            )
         );
     }
 

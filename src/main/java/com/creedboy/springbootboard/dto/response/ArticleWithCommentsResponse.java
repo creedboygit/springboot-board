@@ -14,7 +14,7 @@ public record ArticleWithCommentsResponse(
     String email,
     String nickname,
     String userId,
-    Set<ArticleCommentResponse> articleCommentResponse
+    Set<ArticleCommentResponse> articleCommentsResponse
 ) {
 
     public static ArticleWithCommentsResponse of(Long id, String title, String hashtag, LocalDateTime createdAt, String email, String nickname, String userId, Set<ArticleCommentResponse> articleCommentResponse) {
