@@ -1,6 +1,8 @@
 package com.creedboy.springbootboard.dto;
 
+import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.ArticleComment;
+import com.creedboy.springbootboard.domain.UserAccount;
 import java.time.LocalDateTime;
 
 public record ArticleCommentDto(
@@ -46,5 +48,13 @@ public record ArticleCommentDto(
             entity.getCreatedBy(),
             entity.getModifiedAt(),
             entity.getModifiedBy());
+    }
+
+    public ArticleComment toEntity(Article article, UserAccount userAccount) {
+        return ArticleComment.of(
+            article,
+            userAccount,
+            content
+        );
     }
 }
