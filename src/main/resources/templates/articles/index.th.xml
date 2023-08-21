@@ -16,6 +16,10 @@
     </attr>
     <!-- // 검색바 -->
 
+    <!-- 검색어 -->
+    <attr sel="#search-value" th:value="${param.searchValue}" />
+    <!-- // 검색어 -->
+
     <attr sel="#article-table">
       <!-- 정렬 -->
       <attr sel="thead/tr">
