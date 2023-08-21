@@ -7,13 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestComponent;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @DisplayName("View 컨트롤러 - 인증")
-@WebMvcTest
+@WebMvcTest(AuthControllerTest.EmptyController.class)
 public class AuthControllerTest {
 
     @Autowired
@@ -38,4 +39,8 @@ public class AuthControllerTest {
             .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
     }
 
+    @TestComponent
+    static class EmptyController {
+
+    }
 }

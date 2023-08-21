@@ -6,6 +6,8 @@ import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
 import com.creedboy.springbootboard.dto.response.ArticleResponse;
 import com.creedboy.springbootboard.dto.response.ArticleWithCommentsResponse;
 import com.creedboy.springbootboard.service.ArticleService;
+import com.creedboy.springbootboard.service.PaginationService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,8 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
+    private final PaginationService paginationService;
+
     @GetMapping
     public String articles(
         @RequestParam(required = false) SearchType searchType,
@@ -33,9 +37,12 @@ public class ArticleController {
         ModelMap map
     ) {
         Page<ArticleDto> articleDtos = articleService.searchArticles(searchType, searchValue, pageable);
-        Page<ArticleResponse> articleDtosMap = articleDtos.map(ArticleResponse::from);
+        Page<ArticleResponse> articles = articleDtos.map(ArticleResponse::from);
 
-        map.addAttribute("articles", articleDtosMap);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
+
+        map.addAttribute("articles", articles);
+        map.addAttribute("paginationBarNumbers", barNumbers);
 
         return "articles/index";
     }
