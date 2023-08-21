@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PagenationService {
+public class PaginationService {
 
     private static final int BAR_LENGTH = 5;
 

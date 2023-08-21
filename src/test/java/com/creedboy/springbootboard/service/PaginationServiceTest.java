@@ -15,32 +15,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @DisplayName("비즈니스로직 - 페이지네이션")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = PagenationService.class)
-class PagenationServiceTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = PaginationService.class)
+class PaginationServiceTest {
 
-    private final PagenationService pagenationService;
+    private final PaginationService paginationService;
 
-    public PagenationServiceTest(@Autowired PagenationService pagenationService) {
-        this.pagenationService = pagenationService;
+    public PaginationServiceTest(@Autowired PaginationService paginationService) {
+        this.paginationService = paginationService;
     }
 
     @DisplayName("현재 페이지 번호와 총 페이지 수를 주면 페이징 바 리스트를 만들어줌")
     @MethodSource
     @ParameterizedTest(name = "[{index}] 현재 페이지: {0}, 총 페이지: {1} -> 리스트: {2}")
-    public void givenCurrentPageNumberAndTotalPages_whenCalculating_thenReturnsPagenationBarNumbers(
+    public void givenCurrentPageNumberAndTotalPages_whenCalculating_thenReturnsPaginationBarNumbers(
         int currentPageNumber, int totalPages, List<Integer> expected
     ) {
 
         // Given
 
         // When
-        List<Integer> actual = pagenationService.getPaginationBarNumbers(currentPageNumber, totalPages);
+        List<Integer> actual = paginationService.getPaginationBarNumbers(currentPageNumber, totalPages);
 
         // Then
         assertThat(actual).isEqualTo(expected);
     }
 
-    public static Stream<Arguments> givenCurrentPageNumberAndTotalPages_whenCalculating_thenReturnsPagenationBarNumbers() {
+    public static Stream<Arguments> givenCurrentPageNumberAndTotalPages_whenCalculating_thenReturnsPaginationBarNumbers() {
         return Stream.of(
             arguments(0, 2, List.of(0, 1)),
             arguments(1, 2, List.of(0, 1))
@@ -54,7 +54,7 @@ class PagenationServiceTest {
         // Given
 
         // When
-        int barLength = pagenationService.currentBarLentgh();
+        int barLength = paginationService.currentBarLentgh();
 
         // Then
         Assertions.assertThat(barLength).isEqualTo(5);

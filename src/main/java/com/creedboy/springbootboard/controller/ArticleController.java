@@ -6,7 +6,7 @@ import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
 import com.creedboy.springbootboard.dto.response.ArticleResponse;
 import com.creedboy.springbootboard.dto.response.ArticleWithCommentsResponse;
 import com.creedboy.springbootboard.service.ArticleService;
-import com.creedboy.springbootboard.service.PagenationService;
+import com.creedboy.springbootboard.service.PaginationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    private final PagenationService pagenationService;
+    private final PaginationService paginationService;
 
     @GetMapping
     public String articles(
@@ -39,10 +39,10 @@ public class ArticleController {
         Page<ArticleDto> articleDtos = articleService.searchArticles(searchType, searchValue, pageable);
         Page<ArticleResponse> articles = articleDtos.map(ArticleResponse::from);
 
-        List<Integer> barNumbers = pagenationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
 
         map.addAttribute("articles", articles);
-        map.addAttribute("pagenationBarNumbers", barNumbers);
+        map.addAttribute("paginationBarNumbers", barNumbers);
 
         return "articles/index";
     }
