@@ -1,6 +1,8 @@
 package com.creedboy.springbootboard.service;
 
+import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.ArticleComment;
+import com.creedboy.springbootboard.domain.UserAccount;
 import com.creedboy.springbootboard.dto.ArticleCommentDto;
 import com.creedboy.springbootboard.repository.ArticleCommentRepository;
 import com.creedboy.springbootboard.repository.ArticleRepository;
@@ -36,7 +38,12 @@ public class ArticleCommentService {
 
     public void saveArticleComment(ArticleCommentDto dto) {
         try {
-            articleCommentRepository.save(dto.toEntity(articleRepository.getReferenceById(dto.id()), userAccountRepository.getReferenceById(dto.userAccountDto().id())));
+            Article article = articleRepository.getReferenceById(dto.id());
+            UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
+            ArticleComment articleComment = dto.toEntity(article, userAccount);
+
+            articleCommentRepository.save(articleComment);
+            
         } catch (EntityNotFoundException e) {
             log.debug("======= 댓글 저장 실패. 댓글의 게시글을 찾을 수 없습니다. - dto: {}", dto);
         }

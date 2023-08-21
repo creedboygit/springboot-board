@@ -13,6 +13,7 @@ import com.creedboy.springbootboard.dto.ArticleCommentDto;
 import com.creedboy.springbootboard.dto.UserAccountDto;
 import com.creedboy.springbootboard.repository.ArticleCommentRepository;
 import com.creedboy.springbootboard.repository.ArticleRepository;
+import com.creedboy.springbootboard.repository.UserAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +30,9 @@ class ArticleCommentServiceTest {
 
     @InjectMocks
     private ArticleCommentService articleCommentService;
+
+    @Mock
+    private UserAccountRepository userAccountRepository;
 
     @Mock
     private ArticleCommentRepository articleCommentRepository;
