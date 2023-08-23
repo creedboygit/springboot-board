@@ -2,6 +2,7 @@ package com.creedboy.springbootboard.repository;
 
 import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.QArticle;
+import com.creedboy.springbootboard.repository.querydsl.ArticleQueryRepository;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface ArticleRepository extends
     JpaRepository<Article, Long>,
+    ArticleQueryRepository,
     QuerydslPredicateExecutor<Article>,
     QuerydslBinderCustomizer<QArticle> {
 

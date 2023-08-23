@@ -16,7 +16,9 @@ import com.creedboy.springbootboard.dto.UserAccountDto;
 import com.creedboy.springbootboard.repository.ArticleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,6 +78,38 @@ class ArticleServiceTest {
         // Then
         assertThat(articles).isEmpty();
         then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
+    }
+
+    @DisplayName("검색어 없이 게시글을 해시태그 검색하면, 빈 페이지를 반환")
+    @Test
+    public void givenNoSearchParameters_whenSearchingArticlesViaHashtag_thenReturnsArticlesPage() {
+
+        // Given
+        String hashtag = "#java";
+        Pageable pageable = Pageable.ofSize(10);
+        given(articleRepository.findByHashtag(hashtag, pageable)).willReturn(Page.empty(pageable));
+
+        // When
+        Page<ArticleDto> articles = articleService.searchArticlesViaHashtag(hashtag, pageable);
+
+        // Then
+        Assertions.assertThat(articles).isEqualTo(Page.empty(pageable));
+        then(articleRepository).should().findByHashtag(hashtag, pageable);
+    }
+
+    @DisplayName("게시글을 해시태그 검색하면, 게시글 페이지를 반환")
+    @Test
+    public void givenHashtag_whenSearchingArticlesViaHashtag_thenReturnsEmptyPage() {
+
+        // Given
+        Pageable pageable = Pageable.ofSize(10);
+
+        // When
+        Page<ArticleDto> articles = articleService.searchArticlesViaHashtag(null, pageable);
+
+        // Then
+        Assertions.assertThat(articles).isEqualTo(Page.empty(pageable));
+        then(articleRepository).shouldHaveNoInteractions();
     }
 
     @DisplayName("게시글을 조회 시 게시글 반환")
@@ -171,7 +205,7 @@ class ArticleServiceTest {
         then(articleRepository).should().getReferenceById(dto.id());
     }
 
-    @DisplayName(" 게시글의 아이디를 입력하면, 게시글 삭제")
+    @DisplayName("게시글의 아이디를 입력하면, 게시글 삭제")
     @Test
     public void givenArticleId_whenDeletingArticle_thenDeletesArticle() {
 
@@ -184,6 +218,38 @@ class ArticleServiceTest {
 
         // Then
         then(articleRepository).should().deleteById(articleId);
+    }
+
+    @DisplayName("게시글 수를 조회하면, 게시글 수를 반환")
+    @Test
+    public void givenNothing_whenCountingArticles_thenReturnsArticleCount() {
+
+        // Given
+        long expected = 0L;
+        given(articleRepository.count()).willReturn(expected);
+
+        // When
+        long actual = articleService.getArticleCount();
+
+        // Then
+        assertThat(actual).isEqualTo(expected);
+        then(articleRepository).should().count();
+    }
+
+    @DisplayName("해시태그를 조회하면, 유니크 해시태그 리스트를 반환")
+    @Test
+    public void givenNothing_whenCalling_thenReturnsHashtags() {
+
+        // Given
+        List<String> expectedHashtags = List.of("#java", "#spring", "#boot");
+        given(articleRepository.findAllDistinctHashtags()).willReturn(expectedHashtags);
+
+        // When
+        List<String> actualHashtags = articleService.getHashtags();
+
+        // Then
+        assertThat(actualHashtags).isEqualTo(expectedHashtags);
+        then(articleRepository).should().findAllDistinctHashtags();
     }
 
 
