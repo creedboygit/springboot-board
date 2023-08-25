@@ -5,6 +5,7 @@ import com.creedboy.springbootboard.domain.constant.SearchType;
 import com.creedboy.springbootboard.dto.ArticleDto;
 import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
 import com.creedboy.springbootboard.repository.ArticleRepository;
+import com.creedboy.springbootboard.repository.UserAccountRepository;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -23,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleService {
 
     public static final String HASHTAG_SHARP = "#";
+
     private final ArticleRepository articleRepository;
+    private final UserAccountRepository userAccountRepository;
 
     @Transactional(readOnly = true)
     public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
@@ -43,7 +46,7 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticleWithCommentsDto getArticle(Long articleId) {
+    public ArticleWithCommentsDto getArticleWithComments(Long articleId) {
 
         return articleRepository.findById(articleId)
             .map(ArticleWithCommentsDto::from)

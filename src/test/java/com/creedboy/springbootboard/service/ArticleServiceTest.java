@@ -123,7 +123,7 @@ class ArticleServiceTest {
 
         // When
 //        ArticleDto article = articleService.searchArticle(1L);
-        ArticleWithCommentsDto dto = articleService.getArticle(articleId);
+        ArticleWithCommentsDto dto = articleService.getArticleWithComments(articleId);
 
         // Then
 //        assertThat(article).isNotNull();
@@ -144,7 +144,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.empty());
 
         // When
-        Throwable t = catchThrowable(() -> articleService.getArticle(articleId));
+        Throwable t = catchThrowable(() -> articleService.getArticleWithComments(articleId));
 
         // Then
         assertThat(t)

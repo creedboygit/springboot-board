@@ -144,7 +144,7 @@ class ArticleControllerTest {
 
         // Given
         Long articleId = 1L;
-        given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentDto());
+        given(articleService.getArticleWithComments(articleId)).willReturn(createArticleWithCommentDto());
 
         // When & Then
         mvc.perform(get("/articles/" + articleId))
@@ -154,7 +154,7 @@ class ArticleControllerTest {
             .andExpect(model().attributeExists("articleComments"))
             .andExpect(view().name("articles/detail"));
 
-        then(articleService).should().getArticle(articleId);
+        then(articleService).should().getArticleWithComments(articleId);
     }
 
     @Disabled("구현 중")
