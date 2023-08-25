@@ -1,6 +1,7 @@
 package com.creedboy.springbootboard.dto;
 
 import com.creedboy.springbootboard.domain.Article;
+import com.creedboy.springbootboard.domain.UserAccount;
 import java.time.LocalDateTime;
 
 public record ArticleDto(
@@ -44,10 +45,10 @@ public record ArticleDto(
         );
     }
 
-    public Article toEntity() {
+    public Article toEntity(UserAccount userAccount) {
 
         return Article.of(
-            userAccountDto.toEntity(),
+            userAccount,
             title,
             content,
             hashtag
