@@ -1,8 +1,11 @@
 package com.creedboy.springbootboard.controller;
 
+import com.creedboy.springbootboard.domain.constant.FormStatus;
 import com.creedboy.springbootboard.domain.constant.SearchType;
 import com.creedboy.springbootboard.dto.ArticleDto;
 import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
+import com.creedboy.springbootboard.dto.UserAccountDto;
+import com.creedboy.springbootboard.dto.request.ArticleRequest;
 import com.creedboy.springbootboard.dto.response.ArticleResponse;
 import com.creedboy.springbootboard.dto.response.ArticleWithCommentsResponse;
 import com.creedboy.springbootboard.service.ArticleService;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -77,6 +81,24 @@ public class ArticleController {
         map.addAttribute("searchType", SearchType.HASHTAG);
 
         return "articles/search-hashtag";
+    }
 
+    @GetMapping("/form")
+    public String articleForm(ModelMap map) {
+
+        map.addAttribute("formStatus", FormStatus.CREATE);
+
+        return "articles/form";
+    }
+
+    @PostMapping("/form")
+    public String postNewArticle(ArticleRequest articleRequest) {
+
+        // TODO : creed - 2023-08-26 - 인증 정보를 넣어줘야 함
+        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
+            1L, "creed", "password", "creed@creed.com", "creed", "creed", null, null, null, null
+        )));
+
+        return "redirect:/articles";
     }
 }
