@@ -5,6 +5,7 @@ import com.creedboy.springbootboard.dto.ArticleDto;
 import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
 import com.creedboy.springbootboard.dto.response.ArticleResponse;
 import com.creedboy.springbootboard.dto.response.ArticleWithCommentsResponse;
+import com.creedboy.springbootboard.repository.UserAccountRepository;
 import com.creedboy.springbootboard.service.ArticleService;
 import com.creedboy.springbootboard.service.PaginationService;
 import java.util.List;
@@ -28,6 +29,8 @@ public class ArticleController {
     private final ArticleService articleService;
 
     private final PaginationService paginationService;
+
+    private final UserAccountRepository userAccountRepository;
 
     @GetMapping
     public String articles(
