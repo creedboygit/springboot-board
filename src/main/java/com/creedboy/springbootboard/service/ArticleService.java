@@ -1,6 +1,7 @@
 package com.creedboy.springbootboard.service;
 
 import com.creedboy.springbootboard.domain.Article;
+import com.creedboy.springbootboard.domain.UserAccount;
 import com.creedboy.springbootboard.domain.constant.SearchType;
 import com.creedboy.springbootboard.dto.ArticleDto;
 import com.creedboy.springbootboard.dto.ArticleWithCommentsDto;
@@ -53,14 +54,24 @@ public class ArticleService {
             .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
     }
 
+    @Transactional(readOnly = true)
+    public ArticleDto getArticle(Long articleId) {
+        return articleRepository.findById(articleId)
+            .map(ArticleDto::from)
+            .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
+    }
+
     public void saveArticle(ArticleDto dto) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
         articleRepository.save(dto.toEntity());
     }
 
-    public void updateArticle(ArticleDto dto) {
+    //    public void updateArticle(ArticleDto dto) {
+    public void updateArticle(Long articleId, ArticleDto dto) {
 
         try {
-            Article article = articleRepository.getReferenceById(dto.id());
+//            Article article = articleRepository.getReferenceById(dto.id());
+            Article article = articleRepository.getReferenceById(articleId);
 
             if (dto.title() != null) {
                 article.setTitle(dto.title());
