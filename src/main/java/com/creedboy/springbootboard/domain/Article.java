@@ -49,6 +49,7 @@ public class Article extends BaseEntity {
 //    @JoinColumn(name = "userAccount_id")
 //    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 //    @ManyToOne(optional = false)
+    @Setter
     @JoinColumn(name = "user_account_id")
     @ManyToOne(optional = false)
     private UserAccount userAccount; // 유저 정보 (ID)

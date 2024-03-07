@@ -35,6 +35,7 @@ public class ArticleComment extends BaseEntity {
     //    @Setter
 //    @JoinColumn(name = "user_id")
 //    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @Setter
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount; // 유저 정보 (ID)
