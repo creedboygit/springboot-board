@@ -33,9 +33,6 @@ public class ArticleComment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @Setter
-//    @JoinColumn(name = "user_id")
-//    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     @Setter
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_account_id")
@@ -60,23 +57,6 @@ public class ArticleComment extends BaseEntity {
 
         return new ArticleComment(article, userAccount, content);
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (!(o instanceof ArticleComment that)) {
-//            return false;
-//        }
-//        return Objects.equals(id, that.id) && Objects.equals(userAccount, that.userAccount) && Objects.equals(article, that.article) && Objects.equals(content, that.content);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, userAccount, article, content);
-//    }
-
 
     @Override
     public boolean equals(Object o) {
