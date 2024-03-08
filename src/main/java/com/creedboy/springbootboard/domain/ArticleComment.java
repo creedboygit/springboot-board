@@ -9,6 +9,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -86,11 +87,13 @@ public class ArticleComment extends BaseEntity {
             return false;
         }
 
-        return id.equals(that.id);
+//        return id.equals(that.id);
+        return this.getId() != null && this.getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+//        return id.hashCode();
+        return Objects.hash(this.getId());
     }
 }

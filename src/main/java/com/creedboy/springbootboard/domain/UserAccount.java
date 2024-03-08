@@ -78,12 +78,14 @@ public class UserAccount extends BaseEntity {
         if (!(o instanceof UserAccount that)) {
             return false;
         }
-        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(userPassword, that.userPassword) && Objects.equals(email, that.email) && Objects.equals(
-            nickname, that.nickname) && Objects.equals(memo, that.memo);
+//        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(userPassword, that.userPassword) && Objects.equals(email, that.email) && Objects.equals(
+//            nickname, that.nickname) && Objects.equals(memo, that.memo);
+        return this.getUserId() != null && this.getUserId().equals(that.getUserId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, userPassword, email, nickname, memo);
+//        return Objects.hash(id, userId, userPassword, email, nickname, memo);
+        return Objects.hash(this.getUserId());
     }
 }

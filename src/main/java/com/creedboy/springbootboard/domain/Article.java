@@ -14,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -92,15 +93,17 @@ public class Article extends BaseEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Article article)) {
+        if (!(o instanceof Article that)) {
             return false;
         }
 
-        return id.equals(article.id);
+//        return id.equals(article.id);
+        return this.getId() != null && this.getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+//        return id.hashCode();
+        return Objects.hash(this.getId());
     }
 }
