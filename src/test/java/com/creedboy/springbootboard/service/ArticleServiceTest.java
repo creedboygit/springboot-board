@@ -35,7 +35,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 class ArticleServiceTest {
 
     @InjectMocks
-    private ArticleService articleService;
+    private ArticleService sut;
 
     @Mock
     private ArticleRepository articleRepository;
@@ -60,7 +60,7 @@ class ArticleServiceTest {
         given(articleRepository.findAll(pageable)).willReturn(Page.empty());
 
         // When
-        Page<ArticleDto> articles = articleService.searchArticles(null, null, pageable);
+        Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);
 
         // Then
         assertThat(articles).isEmpty();
@@ -78,7 +78,7 @@ class ArticleServiceTest {
         given(articleRepository.findByTitleContaining(searchKeyword, pageable)).willReturn(Page.empty());
 
         // When
-        Page<ArticleDto> articles = articleService.searchArticles(searchType, searchKeyword, pageable);
+        Page<ArticleDto> articles = sut.searchArticles(searchType, searchKeyword, pageable);
 
         // Then
         assertThat(articles).isEmpty();
@@ -95,7 +95,7 @@ class ArticleServiceTest {
         given(articleRepository.findByHashtag(hashtag, pageable)).willReturn(Page.empty(pageable));
 
         // When
-        Page<ArticleDto> articles = articleService.searchArticlesViaHashtag(hashtag, pageable);
+        Page<ArticleDto> articles = sut.searchArticlesViaHashtag(hashtag, pageable);
 
         // Then
         Assertions.assertThat(articles).isEqualTo(Page.empty(pageable));
@@ -112,7 +112,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
         // When
-        ArticleWithCommentsDto dto = articleService.getArticleWithComments(articleId);
+        ArticleWithCommentsDto dto = sut.getArticleWithComments(articleId);
 //        System.out.println("dto = " + dto);
 
         // Then
@@ -133,7 +133,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.empty());
 
         // When
-        Throwable t = catchThrowable(() -> articleService.getArticleWithComments(articleId));
+        Throwable t = catchThrowable(() -> sut.getArticleWithComments(articleId));
 
         // Then
         Assertions.assertThat(t)
@@ -151,7 +151,7 @@ class ArticleServiceTest {
         Pageable pageable = Pageable.ofSize(10);
 
         // When
-        Page<ArticleDto> articles = articleService.searchArticlesViaHashtag(null, pageable);
+        Page<ArticleDto> articles = sut.searchArticlesViaHashtag(null, pageable);
 
         // Then
         Assertions.assertThat(articles).isEqualTo(Page.empty(pageable));
@@ -170,7 +170,7 @@ class ArticleServiceTest {
         // When
 //        ArticleDto article = articleService.searchArticle(1L);
 //        ArticleWithCommentsDto dto = articleService.getArticleWithComments(articleId);
-        ArticleDto dto = articleService.getArticle(articleId);
+        ArticleDto dto = sut.getArticle(articleId);
 
         // Then
 //        assertThat(article).isNotNull();
@@ -191,7 +191,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.empty());
 
         // When
-        Throwable t = catchThrowable(() -> articleService.getArticleWithComments(articleId));
+        Throwable t = catchThrowable(() -> sut.getArticleWithComments(articleId));
 
         // Then
         assertThat(t)
@@ -206,15 +206,15 @@ class ArticleServiceTest {
     public void givenArticleInfo_whenSavingArticle_thenSavesArticle() {
 
         // Given
-        ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "새 해시태그");
-        given(userAccountRepository.getReferenceById(dto.userAccountDto().id())).willReturn(createUserAccount());
+        ArticleDto dto = createArticleDto();
+        given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(createUserAccount());
         given(articleRepository.save(any(Article.class))).willReturn(createArticle());
 
         // When
-        articleService.saveArticle(dto);
+        sut.saveArticle(dto);
 
         // Then
-        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().id());
+        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
         then(articleRepository).should().save(any(Article.class));
     }
 
@@ -228,7 +228,7 @@ class ArticleServiceTest {
         given(articleRepository.getReferenceById(dto.id())).willReturn(article);
 
         // When
-        articleService.updateArticle(dto.id(), dto);
+        sut.updateArticle(dto.id(), dto);
 
         // Then
         assertThat(article)
@@ -248,7 +248,7 @@ class ArticleServiceTest {
         given(articleRepository.getReferenceById(dto.id())).willThrow(EntityNotFoundException.class);
 
         // When
-        articleService.updateArticle(dto.id(), dto);
+        sut.updateArticle(dto.id(), dto);
 
         // Then
         then(articleRepository).should().getReferenceById(dto.id());
@@ -263,7 +263,7 @@ class ArticleServiceTest {
         willDoNothing().given(articleRepository).deleteById(articleId);
 
         // When
-        articleService.deleteArticle(1L);
+        sut.deleteArticle(1L);
 
         // Then
         then(articleRepository).should().deleteById(articleId);
@@ -278,7 +278,7 @@ class ArticleServiceTest {
         given(articleRepository.count()).willReturn(expected);
 
         // When
-        long actual = articleService.getArticleCount();
+        long actual = sut.getArticleCount();
 
         // Then
         assertThat(actual).isEqualTo(expected);
@@ -294,13 +294,12 @@ class ArticleServiceTest {
         given(articleRepository.findAllDistinctHashtags()).willReturn(expectedHashtags);
 
         // When
-        List<String> actualHashtags = articleService.getHashtags();
+        List<String> actualHashtags = sut.getHashtags();
 
         // Then
         assertThat(actualHashtags).isEqualTo(expectedHashtags);
         then(articleRepository).should().findAllDistinctHashtags();
     }
-
 
     private Article createArticle() {
 
@@ -318,7 +317,7 @@ class ArticleServiceTest {
 
     private UserAccount createUserAccount() {
 
-        return UserAccount.of(1L,
+        return UserAccount.of(
             "userId",
             "passwords",
             "creed@creed.com",
@@ -329,17 +328,6 @@ class ArticleServiceTest {
     private ArticleDto createArticleDto() {
 
         return createArticleDto("title", "content", "hashtag");
-
-//        return ArticleDto.of(1L,
-//            createUserAccountDto(),
-//            "title",
-//            "content",
-//            "hashtag",
-//            LocalDateTime.now(),
-//            "creed",
-//            LocalDateTime.now(),
-//            "creed"
-//        );
     }
 
     private ArticleDto createArticleDto(String title, String content, String hashtag) {
@@ -360,12 +348,15 @@ class ArticleServiceTest {
     private UserAccountDto createUserAccountDto() {
 
         return UserAccountDto.of(
-            1L,
             "creed",
             "password",
             "creed@creed.com",
             "nickname",
-            "memo"
+            "memo",
+            null,
+            null,
+            null,
+            null
         );
     }
 }

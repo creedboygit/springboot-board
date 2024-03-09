@@ -27,7 +27,7 @@ import lombok.ToString;
         @Index(columnList = "createdBy")
     })
 @Entity
-public class ArticleComment extends BaseEntity {
+public class ArticleComment extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,16 +35,17 @@ public class ArticleComment extends BaseEntity {
 
     @Setter
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_account_id")
-    private UserAccount userAccount; // 유저 정보 (ID)
-
-    @Setter
-    @ManyToOne(optional = false)
     private Article article; // 게시글 (ID)
 
     @Setter
+    @ManyToOne(optional = false)
+//    @JoinColumn(name = "user_account_id")
+    @JoinColumn(name = "userId")
+    private UserAccount userAccount; // 유저 정보 (ID)
+
+    @Setter
     @Column(nullable = false, length = 500)
-    private String content; // 내용
+    private String content; // 본문
 
     private ArticleComment(Article article, UserAccount userAccount, String content) {
 
@@ -68,12 +69,14 @@ public class ArticleComment extends BaseEntity {
         }
 
 //        return id.equals(that.id);
-        return this.getId() != null && this.getId().equals(that.getId());
+//        return this.getId() != null && this.getId().equals(that.getId());
+        return id != null && id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
 //        return id.hashCode();
-        return Objects.hash(this.getId());
+//        return Objects.hash(this.getId());
+        return Objects.hash(id);
     }
 }

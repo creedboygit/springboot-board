@@ -36,7 +36,7 @@ import lombok.ToString;
         @Index(columnList = "createdBy")
     })
 @Entity
-public class Article extends BaseEntity {
+public class Article extends AuditingFields {
 
     // TODO : creed - 2023-08-20 - 소스 주석 정리
 
@@ -51,8 +51,9 @@ public class Article extends BaseEntity {
 //    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 //    @ManyToOne(optional = false)
     @Setter
-    @JoinColumn(name = "user_account_id")
+//    @JoinColumn(name = "user_account_id")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "userId")
     private UserAccount userAccount; // 유저 정보 (ID)
 
 //    @Column

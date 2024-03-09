@@ -62,7 +62,8 @@ public class ArticleService {
     }
 
     public void saveArticle(ArticleDto dto) {
-        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
+//        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
+        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
 //        articleRepository.save(dto.toEntity());
         articleRepository.save(dto.toEntity(userAccount));
     }

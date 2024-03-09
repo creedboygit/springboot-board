@@ -61,6 +61,7 @@ public class ArticleController {
 //        map.addAttribute("article", "article");
         map.addAttribute("article", articlesResponse);
         map.addAttribute("articleComments", articlesResponse.articleCommentsResponse());
+        map.addAttribute("totalCount", articleService.getArticleCount());
 
         return "articles/detail";
     }
@@ -96,8 +97,36 @@ public class ArticleController {
 
         // TODO : creed - 2023-08-26 - 인증 정보를 넣어줘야 함
         articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
-            1L, "creed", "password", "creed@creed.com", "creed", "creed", null, null, null, null
+            "creed", "password", "creed@creed.com", "creed", "creed", null, null, null, null
         )));
+
+        return "redirect:/articles";
+    }
+
+    @GetMapping("/{articleId}/form")
+    public String updateArticleForm(@PathVariable Long articleId, ModelMap map) {
+        ArticleResponse article = ArticleResponse.from(articleService.getArticle(articleId));
+
+        map.addAttribute("article", article);
+        map.addAttribute("formStatus", FormStatus.UPDATE);
+
+        return "articles/form";
+    }
+
+    @PostMapping("{articleId}/form")
+    public String updateArticle(@PathVariable Long articleId, ArticleRequest articleRequest) {
+        // TODO : 인증 정보를 넣어줘야 한다.
+        articleService.updateArticle(articleId, articleRequest.toDto(UserAccountDto.of(
+            "creed", "hello", "creed@creed.com", "creed", "memos", null, null, null, null
+        )));
+
+        return "redirect:/articles/" + articleId;
+    }
+
+    @PostMapping("/{articleId}/delete")
+    public String deleteArticle(@PathVariable Long articleId) {
+        // TODO : 인증 정보를 넣어줘야 한다.
+        articleService.deleteArticle(articleId);
 
         return "redirect:/articles";
     }

@@ -16,26 +16,26 @@ import lombok.ToString;
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 //@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(callSuper = true)
 //@Builder
 @Table(
     indexes = {
-        @Index(columnList = "userId", unique = true),
+//        @Index(columnList = "userId", unique = true),
         @Index(columnList = "email", unique = true),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
     })
 @Entity
-public class UserAccount extends BaseEntity {
+public class UserAccount extends AuditingFields {
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+////    @Column(name = "id")
+////    @JoinColumn(name = "user_account_id")
+//    @Column(name = "user_account_id")
+//    private Long id;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
-//    @JoinColumn(name = "user_account_id")
-    @Column(name = "user_account_id")
-    private Long id;
-
     @Column(length = 50)
     private String userId;
 
@@ -53,21 +53,20 @@ public class UserAccount extends BaseEntity {
     public UserAccount() {
     }
 
-//    private UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
-//        this.userId = userId;
-//        this.userPassword = userPassword;
-//        this.email = email;
-//        this.nickname = nickname;
-//        this.memo = memo;
-//    }
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
+        this.userId = userId;
+        this.userPassword = userPassword;
+        this.email = email;
+        this.nickname = nickname;
+        this.memo = memo;
+    }
 
-    public static UserAccount of(Long id,
-        String userId,
+    public static UserAccount of(String userId,
         String userPassword,
         String email,
         String nickname,
         String memo) {
-        return new UserAccount(id, userId, userPassword, email, nickname, memo);
+        return new UserAccount(userId, userPassword, email, nickname, memo);
     }
 
     @Override
@@ -75,17 +74,19 @@ public class UserAccount extends BaseEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserAccount that)) {
+        if (!(o instanceof UserAccount userAccount)) {
             return false;
         }
 //        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(userPassword, that.userPassword) && Objects.equals(email, that.email) && Objects.equals(
 //            nickname, that.nickname) && Objects.equals(memo, that.memo);
-        return this.getUserId() != null && this.getUserId().equals(that.getUserId());
+//        return this.getUserId() != null && this.getUserId().equals(that.getUserId());
+        return userId != null && userId.equals(userAccount.userId);
     }
 
     @Override
     public int hashCode() {
 //        return Objects.hash(id, userId, userPassword, email, nickname, memo);
-        return Objects.hash(this.getUserId());
+//        return Objects.hash(this.getUserId());
+        return Objects.hash(userId);
     }
 }

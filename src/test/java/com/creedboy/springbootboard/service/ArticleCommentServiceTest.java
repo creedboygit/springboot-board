@@ -45,22 +45,6 @@ class ArticleCommentServiceTest {
     @Test
     void givenArticleId_whenSearchingArticleComments_thenReturnsArticleComments() {
 
-//        Long articleId = 1L;
-//
-//        UserAccount userAccount = UserAccount.of("creedboy", "a123123", "creed@creed.com", "nick", "memos", "createdby");
-//
-//        Article article = Article.of(userAccount, "title", "content", "hashtag");
-//
-//        // Given
-//        BDDMockito.given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
-//
-//        // When
-//        List<ArticleCommentDto> articleCommentList = articleCommentService.searchArticleComment(articleId);
-//
-//        // Then
-//        assertThat(articleCommentList).isNotNull();
-//        then(articleRepository).should().findById(articleId);
-
         // given
         Long articleId = 1L;
 
@@ -184,7 +168,6 @@ class ArticleCommentServiceTest {
 
     private UserAccount createUserAccount() {
         return UserAccount.of(
-            1L,
             "creed",
             "password",
             "creed@creed.com",
@@ -196,7 +179,6 @@ class ArticleCommentServiceTest {
     private UserAccountDto createUserAccountDto() {
 
         return UserAccountDto.of(
-            1L,
             "creed",
             "creed",
             "creed@creed.com",

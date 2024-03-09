@@ -39,7 +39,8 @@ public class ArticleCommentService {
     public void saveArticleComment(ArticleCommentDto dto) {
         try {
             Article article = articleRepository.getReferenceById(dto.id());
-            UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
+//            UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().id());
+            UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
             ArticleComment articleComment = dto.toEntity(article, userAccount);
 
             articleCommentRepository.save(articleComment);

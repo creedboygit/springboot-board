@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <thlogic>
-  <attr sel="#header" th:replace="header :: header" />
-  <attr sel="#footer" th:replace="footer :: footer" />
+  <attr sel="#header" th:replace="header :: header"/>
+  <attr sel="#footer" th:replace="footer :: footer"/>
 
   <attr sel="main" th:object="${articles}">
     <attr sel="#hashtags" th:remove="all-but-first">
@@ -11,7 +11,7 @@
             sort=${param.sort},
             searchType=${searchType.name},
             searchValue=${hashtag}
-        )}" />
+        )}"/>
       </attr>
     </attr>
 
@@ -22,33 +22,32 @@
             sort='title' + (*{sort.getOrderFor('title')} != null ? (*{sort.getOrderFor('title').direction.name} != 'DESC' ? ',desc' : '') : ''),
             searchType=${searchType.name},
             searchValue=${param.searchValue}
-        )}" />
+        )}"/>
         <attr sel="th.content/a" th:text="'본문'" th:href="@{/articles/search-hashtag(
             page=${articles.number},
             sort='content' + (*{sort.getOrderFor('content')} != null ? (*{sort.getOrderFor('content').direction.name} != 'DESC' ? ',desc' : '') : ''),
             searchType=${searchType.name},
             searchValue=${param.searchValue}
-        )}" />
+        )}"/>
         <attr sel="th.user-id/a" th:text="'작성자'" th:href="@{/articles/search-hashtag(
             page=${articles.number},
             sort='userAccount.userId' + (*{sort.getOrderFor('userAccount.userId')} != null ? (*{sort.getOrderFor('userAccount.userId').direction.name} != 'DESC' ? ',desc' : '') : ''),
             searchType=${searchType.name},
             searchValue=${param.searchValue}
-        )}" />
+        )}"/>
         <attr sel="th.created-at/a" th:text="'작성일'" th:href="@{/articles/search-hashtag(
             page=${articles.number},
             sort='createdAt' + (*{sort.getOrderFor('createdAt')} != null ? (*{sort.getOrderFor('createdAt').direction.name} != 'DESC' ? ',desc' : '') : ''),
             searchType=${searchType.name},
             searchValue=${param.searchValue}
-        )}" />
+        )}"/>
       </attr>
       <attr sel="tbody" th:remove="all-but-first">
         <attr sel="tr[0]" th:each="article : ${articles}">
-          <attr sel="td.title/a" th:text="${article.title}" th:href="@{'/articles/' + ${article.id}}" />
-          <attr sel="td.content/span" th:text="${article.content}" />
-          <attr sel="td.hashtag" th:text="${article.hashtag}" />
-          <attr sel="td.user-id" th:text="${article.nickname}" />
-          <attr sel="td.created-at/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}" />
+          <attr sel="td.title/a" th:text="${article.title}" th:href="@{'/articles/' + ${article.id}}"/>
+          <attr sel="td.content/span" th:text="${article.content}"/>
+          <attr sel="td.user-id" th:text="${article.nickname}"/>
+          <attr sel="td.created-at/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}"/>
         </attr>
       </attr>
     </attr>
