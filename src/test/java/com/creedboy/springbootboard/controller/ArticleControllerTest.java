@@ -50,7 +50,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest({ArticleController.class})
 class ArticleControllerTest {
 
-    //    @Autowired
     private final MockMvc mvc;
     private final FormDataEncoder formDataEncoder;
 
