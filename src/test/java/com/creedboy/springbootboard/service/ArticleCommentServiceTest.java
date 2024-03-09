@@ -61,14 +61,14 @@ class ArticleCommentServiceTest {
         then(articleCommentRepository).should().findByArticle_id(articleId);
     }
 
-    @DisplayName("댓글 정보를 입력하면 댓글을 생성")
+    @DisplayName("댓글 정보를 입력하면 댓글을 저장한다.")
     @Test
-    void givenArticleCommentInfo_whenSavingArticle_thenSaveArticleComment() {
+    void givenArticleCommentInfo_whenSavingArticleComment_thenSaveArticleComment() {
 
         // Given
-//        ArticleCommentDto dto = ArticleCommentDto.of(1L, UserAccountDto.of, "content");
         ArticleCommentDto dto = createArticleCommentDto("댓글");
         given(articleRepository.getReferenceById(dto.articleId())).willReturn(createArticle());
+        given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(createUserAccount());
         given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
 
         // When
@@ -76,6 +76,7 @@ class ArticleCommentServiceTest {
 
         // Then
         then(articleRepository).should().getReferenceById(dto.articleId());
+        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
         then(articleCommentRepository).should().save(any(ArticleComment.class));
     }
 
@@ -92,6 +93,7 @@ class ArticleCommentServiceTest {
 
         // then
         then(articleRepository).should().getReferenceById(dto.articleId());
+        then(userAccountRepository).shouldHaveNoInteractions();
         then(articleCommentRepository).shouldHaveNoInteractions();
     }
 
