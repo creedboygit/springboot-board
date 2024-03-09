@@ -352,11 +352,7 @@ class ArticleServiceTest {
             "password",
             "creed@creed.com",
             "nickname",
-            "memo",
-            null,
-            null,
-            null,
-            null
+            "memo"
         );
     }
 }

@@ -370,11 +370,7 @@ class ArticleControllerTest {
             "pw",
             "creed@creed.com",
             "nick",
-            "memo",
-            LocalDateTime.now(),
-            "creed",
-            LocalDateTime.now(),
-            "creed"
+            "memo"
         );
     }
 

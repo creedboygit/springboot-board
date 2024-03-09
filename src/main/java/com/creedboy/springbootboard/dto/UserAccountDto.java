@@ -19,12 +19,8 @@ public record UserAccountDto(
         String userPassword,
         String email,
         String nickname,
-        String memo,
-        LocalDateTime createdAt,
-        String createdBy,
-        LocalDateTime modifiedAt,
-        String modifiedBy) {
-        return new UserAccountDto(userId, userPassword, email, nickname, memo, createdAt, createdBy, modifiedAt, modifiedBy);
+        String memo) {
+        return new UserAccountDto(userId, userPassword, email, nickname, memo, null, null, null, null);
     }
 
     public static UserAccountDto from(UserAccount entity) {

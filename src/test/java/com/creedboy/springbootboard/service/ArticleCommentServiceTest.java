@@ -183,11 +183,7 @@ class ArticleCommentServiceTest {
             "creed",
             "creed@creed.com",
             "creed",
-            "memo",
-            LocalDateTime.now(),
-            "creed",
-            LocalDateTime.now(),
-            "creed"
+            "memo"
         );
     }
 
