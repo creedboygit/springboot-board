@@ -101,17 +101,6 @@ class ArticleCommentServiceTest {
     @Test
     void givenArticleCommentIdAndModifiedInfo_whenUpdatingArticleComment_thenUpdateArticleComment() {
 
-//        // Given
-//        ArticleUpdateCommentDto dto = ArticleUpdateCommentDto.of("contenttt");
-//
-//        given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
-//
-//        // When
-//        articleCommentService.updateArticleComment(1L, dto);
-//
-//        // Then
-//        then(articleCommentRepository).should().save(any(ArticleComment.class));
-
         // given
         String oldContent = "content";
         String updatedContent = "댓글";
@@ -150,13 +139,16 @@ class ArticleCommentServiceTest {
 
         // given
         Long articleCommentId = 1L;
-        willDoNothing().given(articleCommentRepository).deleteById(articleCommentId);
+        String userId = "creedTest";
+//        willDoNothing().given(articleCommentRepository).deleteById(articleCommentId);
+        willDoNothing().given(articleCommentRepository).deleteByIdAndUserAccount_UserId(articleCommentId, userId);
 
         // when
-        articleCommentService.deleteArticleComment(articleCommentId);
+        articleCommentService.deleteArticleComment(articleCommentId, userId);
 
         // then
-        then(articleCommentRepository).should().deleteById(articleCommentId);
+//        then(articleCommentRepository).should().deleteById(articleCommentId);
+        then(articleCommentRepository).should().deleteByIdAndUserAccount_UserId(articleCommentId, userId);
     }
 
     private ArticleComment createArticleComment(String content) {

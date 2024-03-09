@@ -6,20 +6,26 @@ import com.creedboy.springbootboard.config.JpaConfig;
 import com.creedboy.springbootboard.config.P6SpySqlFormatter;
 import com.creedboy.springbootboard.domain.Article;
 import com.creedboy.springbootboard.domain.UserAccount;
+import com.creedboy.springbootboard.repository.JpaRepositoryTest.TestJpaConfig;
 import com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorAutoConfiguration;
 import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.test.context.ActiveProfiles;
 
 @Slf4j
 @DisplayName("JPA 연결 테스트")
-@Import(JpaConfig.class)
+@Import(JpaRepositoryTest.TestJpaConfig.class)
 @ImportAutoConfiguration({DataSourceDecoratorAutoConfiguration.class, P6SpySqlFormatter.class})
 @ActiveProfiles("local")
 //@AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -138,5 +144,15 @@ public class JpaRepositoryTest {
         // Then
         assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
         assertThat(articleCommentRepository.count()).isEqualTo(previousArticleCommentCount - deletedCommentSize);
+    }
+
+    @EnableJpaAuditing
+    @TestConfiguration
+    public static class TestJpaConfig {
+
+        @Bean
+        public AuditorAware<String> auditorAware() {
+            return () -> Optional.of("creed");
+        }
     }
 }

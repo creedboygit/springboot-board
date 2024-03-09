@@ -72,29 +72,30 @@ public class ArticleService {
     public void updateArticle(Long articleId, ArticleDto dto) {
 
         try {
-//            Article article = articleRepository.getReferenceById(dto.id());
             Article article = articleRepository.getReferenceById(articleId);
+            UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
 
-            if (dto.title() != null) {
-                article.setTitle(dto.title());
+            if (article.getUserAccount().equals(userAccount)) {
+                if (dto.title() != null) {
+                    article.setTitle(dto.title());
+                }
+
+                if (dto.content() != null) {
+                    article.setContent(dto.content());
+                }
+
+                article.setHashtag(dto.hashtag());
             }
-
-            if (dto.content() != null) {
-                article.setContent(dto.content());
-            }
-
-            article.setHashtag(dto.hashtag());
-
-//        articleRepository.save(article);
-
         } catch (EntityNotFoundException e) {
 
-            log.debug("======= 게시판 업데이트 실패: dto: {}", dto);
+//            log.debug("======= 게시판 업데이트 실패: 게시글을 수정하는데 필요한 정보를 찾을 수 없습니다 - {}", e.getLocalizedMessage());
+            log.warn("======= 게시판 업데이트 실패: 게시글을 수정하는데 필요한 정보를 찾을 수 없습니다 - {}", e.getLocalizedMessage());
         }
     }
 
-    public void deleteArticle(long articleId) {
-        articleRepository.deleteById(articleId);
+    public void deleteArticle(long articleId, String userId) {
+//        articleRepository.deleteById(articleId);
+        articleRepository.deleteByIdAndUserAccount_UserId(articleId, userId);
     }
 
     public long getArticleCount() {

@@ -74,13 +74,13 @@ public class UserAccount extends AuditingFields {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserAccount userAccount)) {
+        if (!(o instanceof UserAccount that)) {
             return false;
         }
 //        return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(userPassword, that.userPassword) && Objects.equals(email, that.email) && Objects.equals(
 //            nickname, that.nickname) && Objects.equals(memo, that.memo);
 //        return this.getUserId() != null && this.getUserId().equals(that.getUserId());
-        return userId != null && userId.equals(userAccount.userId);
+        return userId != null && userId.equals(that.userId);
     }
 
     @Override

@@ -46,7 +46,8 @@ spring:
 
 logging:
   level:
-    p6spy: DEBUG
+    p6spy: debug
+    com.creedboy.springbootboard: debug
     org.springframework.web.servlet: debug
 #    org.hibernate.orm.jdbc.bind: trace
 #    org.hibernate.sql: debug
