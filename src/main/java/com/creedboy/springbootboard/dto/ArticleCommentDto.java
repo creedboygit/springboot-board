@@ -16,11 +16,6 @@ public record ArticleCommentDto(
     String modifiedBy
 ) {
 
-//    public static ArticleCommentDto of(LocalDateTime createdAt, String createdBy, String content) {
-//
-//        return new ArticleCommentDto(createdAt, createdBy, content);
-//    }
-
     public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
 
         return ArticleCommentDto.of(null, articleId, userAccountDto, content, null, null, null, null);

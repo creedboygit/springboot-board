@@ -14,23 +14,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
-@Slf4j
 @Service
 public class ArticleCommentService {
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
-    private ArticleCommentRepository articleCommentRepository;
+    private final ArticleCommentRepository articleCommentRepository;
 
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
     @Transactional(readOnly = true)
-    public List<ArticleCommentDto> searchArticleComment(Long articleId) {
+    public List<ArticleCommentDto> searchArticleComments(Long articleId) {
 
-//        return List.of();
-        return articleCommentRepository.findByArticle_id(articleId)
+        return articleCommentRepository.findByArticle_Id(articleId)
             .stream()
             .map(ArticleCommentDto::from)
             .toList();
@@ -40,13 +39,9 @@ public class ArticleCommentService {
         try {
             Article article = articleRepository.getReferenceById(dto.articleId());
             UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
-
-            ArticleComment articleComment = dto.toEntity(article, userAccount);
-
-            articleCommentRepository.save(articleComment);
-            
+            articleCommentRepository.save(dto.toEntity(article, userAccount));
         } catch (EntityNotFoundException e) {
-            log.debug("======= 댓글 저장 실패. 댓글 작성에 필요한 정보를 찾을 수 없습니다. - dto: {}", e.getLocalizedMessage());
+            log.warn("댓글 저장 실패. 댓글 작성에 필요한 정보를 찾을 수 없습니다 - {}", e.getLocalizedMessage());
         }
     }
 
