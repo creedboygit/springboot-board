@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'com.creedboy'
-version = '0.0.1-SNAPSHOT'
+version = 'v1.0'
 
 java {
     sourceCompatibility = '17'
@@ -98,4 +98,13 @@ sourceSets {
  */
 clean {
     delete file(querydslDir)
+}
+
+/**
+ * Heroku 설정
+ */
+jar {
+    manifest {
+        attributes('Main-Class': 'com.creed.springbootboard.SpringbootBoardApplication')
+    }
 }
