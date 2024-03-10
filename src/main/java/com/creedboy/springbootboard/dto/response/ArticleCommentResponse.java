@@ -29,7 +29,8 @@ public record ArticleCommentResponse(
             dto.content(),
             dto.createdAt(),
             dto.userAccountDto().email(),
-            dto.userAccountDto().nickname(),
+//            dto.userAccountDto().nickname(),
+            nickname,
             dto.userAccountDto().userId()
         );
     }

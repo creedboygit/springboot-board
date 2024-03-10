@@ -24,6 +24,12 @@ public record ArticleWithCommentsResponse(
     }
 
     public static ArticleWithCommentsResponse from(ArticleWithCommentsDto dto) {
+
+        String nickname = dto.userAccountDto().nickname();
+        if (nickname == null || nickname.isBlank()) {
+            nickname = dto.userAccountDto().userId();
+        }
+
         return ArticleWithCommentsResponse.of(
             dto.id(),
             dto.title(),
@@ -31,7 +37,8 @@ public record ArticleWithCommentsResponse(
             dto.hashtag(),
             dto.createdAt(),
             dto.userAccountDto().email(),
-            dto.userAccountDto().nickname(),
+//            dto.userAccountDto().nickname(),
+            nickname,
             dto.userAccountDto().userId(),
             dto.articleCommentDtos().stream().map(ArticleCommentResponse::from).collect(Collectors.toCollection(LinkedHashSet::new))
         );
