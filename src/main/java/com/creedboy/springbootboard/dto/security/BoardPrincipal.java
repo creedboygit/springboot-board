@@ -101,5 +101,8 @@ public record BoardPrincipal(
         RoleType(String name) {
             this.name = name;
         }
+
+//        public Object getName() {
+//        }
     }
 }
